@@ -1,0 +1,463 @@
+Authetication:-> 
+-> Challenges you to prove you are who you are.
+-> Mainly done through presenting username/password entry mechanism,mostly widely used mechanism are
+ i. Form Login
+ ii. Basic Authentication
+-> Enhanced version:-> MFA(multi factor authentication).user need to prove credential through multiple channels.
+-> MFA requires you to provide
+ i.Something you know(your username and password)
+
+ ii. Something you have(such as your mobile phone)
+-> 2 factor Authentication:-> one way is to enter your username/password and enter one time security code.Exmple paypal
+-> another way of doing 2FA : software based second authentication.example,use of google authentication is login to github.
+
+Authorization:->
+-> Restricting unauthorized access of data/resource
+-> An Authenticated user may not be authorized to read/write a particular data/resource.
+-> Example:-
+	-> Shopping cart
+	-> Normal User - Login and shot
+        -> Administrator-Add,Modify or Delete Item
+
+-> Authorization is implemented by Permissions and Roles.
+
+Htttps Working Mechanism:-In Https before sending any request first step which is performed 
+is the SSL Handshake.so in first step,which is performed on between the client and the server
+is the SSL Handshake.it also consisits furthur granular steps.
+During the SSL Handshake if the server is exposing it's http port it wil be normally 443 is 
+the standard but not necessary you can use any other port.when the request comes to the server.
+when the https request comes to the server,then the process of handshakes start.during handshake,
+ther server then sent a certificate back to the client.this certificates has the public key
+of the server.when the client receives the certificate client verifies this public key
+which has been sent by server and also verirfies the certificate also.
+the reason the client is able to verify the certificate is the public key beacouse it has
+the valid list of certifying authorities.then it uses that list to verify the public key and
+certificates of the server.some Certified Authorities are GoDaddy,Amazon,Email.We can get a
+certificate from these CA.Once the certificate is verified by the client it creates a new
+secret key then it encrypted with public key of the server.then client send secret key to 
+the server which has the secret key signed using the public key of the server beacouse in the
+response it got the public key along with certificates.now this secret key with signed with
+public key of server now it can decrypt that secret key and now this secret key can be used
+to exchange betwenn the request and response of server.
+what ever data client will send will decline,will ecrypt that message using the security key
+and the server when it arrives to decrypt the message using the secret key and when the server
+will response,it will encrypt that message with this secret key and then ther server can decrypt
+that message with the same secret key.this is also called symmetirc encryption.beacouse we
+are using the same key for encryption and decryption,other form is assymetric encryption
+where we use different keys in public and private key for encryption,decryption.
+After this all data are encrypted with the secret key.
+we can use our own self signed certificate
+java provide a tool which is called java key tool which can be used to generate our certifi
+cate and private and public key.
+key tool is inside the bin folder
+
+creating certificate:keytool -genkeypair -alias tcserver -storetype JKS -keystore
+serverkeystore.jks -keyalg RSA -keysize 2048 -keypass topsecret -storepass topsecret
+
+what genkeypair does is it generates a public key and associated private key,and it wraps the
+public key into a x.509 self signed certificate.then this certificate is stored inside our
+key store and private key as well.keystore is the file we generated.
+
+keytool -list -keystore serverkeystore.jks -storepass topsecret
+
+security filter:
+/*
+ * UsernameandpasswordauthenticationFilter
+ * DefaultLoginPageGenarationFilter
+ * DefaultLogoutPageGeneratingFilter
+ * SecurityContextPersistenceFilter
+ * CsrfFilterLogoutFilter
+ * SessionManagementFilter
+ * FilterSecurityInterceptor
+  **/
+
+Basic authentication working mechanism:-> when client first request comes in,
+the request will be intercepted by filter security interceptor then it will start looking
+for authorization basic header beacouse we have configured our security here.means it start
+from the confugure method with HttpSecurity parameter.since client did not send any 
+authentication basic scheme,so it will throw an exception.it will throw access denied exception
+.once the access denied exception is thrown,the control will come to our authentication entry
+point.then our authentication entry point will come into picture then commense method will
+be invoked then response will came back to client with 401 status.then client send request 
+with basic authorization header.so once again when the request comes to our api it will be
+intercepted by the FSI(Filter Security Interceptor) this time basic authorization header
+is present.once it find basic authorization header is present then it will invoke the basic
+authentication filter it will not throw exception beacourse header are present.the BAF(basic
+authentication filter) will do it will be base64 decode the authorization header.once decode
+is done then it will create a username ,password authentication token.it will have the user
+name,and the password.once it has created the username and password token,the control will go 
+to the authentication manager.authentication manager will invoke our user,so authentication 
+will invoke our user details service,whatever userDetailsService we have created.this will
+invoke loadUserByUsername method will be invoke. this method get the username which has been
+set in the token.this method will return the UserDetails class object.
+if UserDetail Object contain the user then connection will be successful.request is send back
+to the user.if password is not match then 401 response is sent back to the user or user not 
+found exception.
+
+After Returning UserDetail class object the progrm flow will go to BasicAuthentication Filter which then verify
+the username and password.
+
+Roles Vs Authorities:-> 
+Role:What role do you play in your team,department or organization Example: Admin,User,Developer,BA,
+Librian etc.
+Authorities:What you are authorized/permitted to do,which may depend on your role.example,Get Book,Add
+Book,Update Book,Get User PRofile,Get User Details
+
+
+/* One User Can Have Multiple Authorities there is one to many mapping between
+	 * the user table and the authorities table
+	 *  */
+	 
+	 During AUthorization wit role:-all the role and authorities they will go as a authorities;
+
+
+Authorization Working Principle:-Authorization means Restricting unauthorize access of data/
+resource which means providing permission for do something like accessing the particular url.
+In spring security we have something called granted authority.granted authority are high
+level permission that the user is granted few examples can be roles and scopes.Granted 
+authority can be obtained from the users details class and the authentication that authorities
+method as well.
+
+In User class we are implementing UserDetails Class.in this spring class there is one method
+called GrantedAuthority.this authority is supposed to return a collection of granted
+authorities.In this Granted Authority,you will see that this is an interface where it is just 
+returning getAuthority().Granted authority is an authority what is granted to a principle
+or user.these authorities can be roles,administrator,user,supervisor.thes roles are used
+for authorizing the action.Other parts of spring security are also capable of interpreting
+these authorities and they expect them to be present that's why we implement method in user 
+class.
+
+
+we will use a particular implementation of granted authorities,which is simple granted 
+authority
+
+Sample:- 
+ create table authorities(
+    authority_id number(10),
+    username varchar2(80),
+    authority varchar2(80),
+    primary key(authority_id),
+    CONSTRAINT unique_authority UNIQUE(username,authority),
+    CONSTRAINT auth_supplier FOREIGN KEY (username) REFERENCES users(username)
+    );
+
+Roles Vs Authority:-> 
+Role:What role do you play in your team,department or organization Example: Admin,User,Developer,BA,
+Librian etc.
+Authorities:What you are authorized/permitted to do,which may depend on your role.example,Get Book,Add
+Book,Update Book,Get User PRofile,Get User Details
+
+
+/* One User Can Have Multiple Authorities there is one to many mapping between
+	 * the user table and the authorities table
+	 *  */
+	 
+	 During AUthorization wit role:-all the role and authorities they will go as a authorities;
+ 
+Database Design:-> 
+create table users(
+    USERNAME varchar2(70),
+    PASSWORD varchar2(70) NOT NULL,
+    ENABLED char(1) NOT NULL CHECK(ENABLED IN('Y','N')),
+    primary key(USERNAME)
+    );
+    
+    create table authorities(
+    authority_id number(10),
+    username varchar2(80),
+    authority varchar2(80),
+    primary key(authority_id),
+    CONSTRAINT unique_authority UNIQUE(username,authority),
+    CONSTRAINT auth_supplier FOREIGN KEY (username) REFERENCES users(username)
+    );
+   
+   create table roles(
+    ROLE varchar2(128) not null,
+    primary key(ROLE)
+    );
+    
+    create table USER_ROLE(
+        USER_ROLE_ID number(10) primary key,
+        USERNAME varchar2(128) not null,
+        ROLE varchar2(128) not null
+        );
+        
+    alter table user_role add constraint user_role_unique unique(username,role);
+    alter table user_role add constraint user_role_fk1 foreign key(username) 
+    references users(username);
+    alter table user_role add constraint user_role_fk2 foreign key(role) 
+    references roles(role);
+    
+    create table authorities(
+        authority_id number(10) primary key,
+        role varchar2(128) not null,
+        authority varchar(128) not null
+        );
+        alter table authorities add constraint authorities_unique unique(role,authority);
+        alter table authorities add constraint authorities_FK1 foreign key(ROLE) references roles(role);
+        
+        insert into roles values('ROLE_ADMIN');
+        insert into roles values('ROLE_USER');
+        
+        insert into user_role values(1,'mahesh','ROLE_ADMIN');
+        insert into user_role values(1,'nabin','ROLE_USER');
+        
+        insert into authorities values(1,'ROLE_ADMIN','ADD_BOOK');
+        insert into authorities values(3,'ROLE_USER','Get_BOOK');
+
+
+Why JWT:-Suppose you send the request to the support department with ticket_number to process.then support department(server) proocessing about your request then 
+it will tell it take some time.after completing processing of your request
+then server wants to send request to you,but it can't sent back to you beacouse it  don't know who you are because http
+is stateless that's why it treats very request as a new request.one idea which can solved this problem is session management.
+this only works for single server.in todays world application can have multiple server.when you send the request to the server then your request can route to any server.
+the solution for this is shared session cash where all thesse server save session information.this problem with this is if this shared session goes down all the session
+ can't work properly.
+
+let's say the customer has to walk up to the service department and the agent asks him what wrong and he tells them the service guy says ok we will work on it come back again 
+tomorrow but imagined you are the service rep and you don't wnat this customer to repeat
+his full storey to some other rep when he comes in tomorrow right so what can you do to 
+make this easy for the customer you don't have any store you don't have anything to save
+this interaction at your end and give him a case id or a token all right so what do you
+do you do all right so here's an idea instead of registering the case in the system and
+giving the customer the case number which you cannot do in this case what you do is you write down all the details of the interaction on the piece of paper and hand it to the 
+customer and say okay bring this back with you the next time you're here and hand it to the customer rep that you talk to they can read this and understand and get all the 
+details okay so this is a change from the previous model the customer rep isn't giving the customer or token id that refers to the details the customer rep is giving the
+ customer the details  itself well if this were to happen does the customer have to rememeber anything well though it's the customer responsibility to get that piece of paper
+  for every subsequent interaction with that support department.the support department doesn't have to remember anything which is good but this is drawback with this approach
+   so let say the customer brings in apiece of paper wiht a history of issues
+how does this support rep trust it there might a malicious customer who takes a piece of paper and writes a complete history of bad customer service and goes to demand for it.
+so it creates problem. so you need to make the record of history trustworthy well one solution is to sign the piece of paper that you give to the customer right.if the 
+suppooert rep can securly sign the information state that's handed to the customer the next time the customer gets it the new support rep can verify the signature to 
+ensure that it's valid .this switched model is what's implied in the jWT mechanism.imagine when the client authenticates instead of the server saving that user information
+ in  a state on the server and returning the ID as a token it return the user information itself as a 
+token right imagine a json paylod being returned with the user information back every time the client makes a subsequent request the client sends the whole JSON token with 
+ request saying this is who i am this is,my id and this is my name the server is isn't saving anything every time request comes in ther server goes ok let's see who this is
+  hmm this JWT says this username is mahesh and they have successfully authenticated okay
+boys let him in.okay this token is not an id here it's a JSON object which has all the information this my friends is what's  called drumroll JSON web tokenss JSON token 
+exchange over the web JWT and off course the problem of security is handled here by signing the token that's handed across each time when a user authenticates the server 
+just doesn't any json object it sends something in a special signed format there's a signature here so when the client sends a subsequent request the the signed jwt is 
+sent back to the server.the server verifies the signature and it trust said only if it's valid in minutes valid all the information that the server needs is right there 
+in the token this is really all that jWT it is.
+
+  
+
+JWT Working principle:-it consists three part
+1.Header 
+2.Payload
+3.Signature
+Example: header.payload.signature
+
+Header:->
+-> Used to store some meta-data
+-> Typically consists of two parts:type and signing algorithm
+Example:
+{
+  "type":"JWT",
+  "alg":"HS512"
+}
+
+Payload:->
+-> Actual data is present which are called Claims
+-> Claims=Facts about entity
+-> Facts about User if we are talking in the context of Authentication
+-> Any Other entity like Company,House,Flight
+
+Types of Claims:
+-> Registered claims: predefined cliams.Optional but recomended.
+Example:- iss,exp,sub,aud
+public Claims:Define at will by those using JWTs.
+
+
+Signature:->
+-> it validates the token
+-> Calculated by base64url encoding header and payload,concatenated together and then hash it 
+   HMAC-SHA256(
+   base64urlEncoding(header) + '.' +
+   base64urlEncoding(payload),
+   secret
+   )
+-> it calcustes the base64url encoding value for the header and payload and concatinated with dot and then we apply secret
+to hash.that's how we get the signature then you can match the signature
+-> when you calculated the signature you will have this secret so what you have done is you would have shared that secret
+with a trusted sender whom you trust so when that entity would have calculated this signature,ok,this signature to from its JWT token.it would have used the same secret to 
+generate this signature based on this payload.
+-> when this whole JWT token has come to your site,you will again thake this sam e payload and the same header and same payolad and apply the same mechanism with the same 
+secret key to generate hash then you will match this hash with this
+
+Advantage of JWT:-
+-> JWTs can be signed using a secret(HMAC or Key Pair)
+-> you can be sure the senders are who they say they are
+-> signature is calculated using the header and the payload
+-> verify that the content hasn't benn tempered
+-> Easy to learn
+
+
+
+Note: for Jwt we need to send post request for login.session based authuntication and authoriation is only fit for single server.
+http://localhost:8080/login
+
+
+
+Oauth 2.0:->
+-> it is a security standard
+-> Give permission to one application to access your data in another application
+-> do not share username and password with other application.
+-> you authorize one application to access data or use features in another application on your
+behalf.
+-> Only works with HTTPS.
+
+Example:-> let's we are logged in stackoverflow with github account then.
+i. Resource Owner :-> it is the user, the user is the owner of his own identity and data.
+you is the resource owner.
+ii. Client :-> it is the application which wants to access that data or perform actions on 
+resource owner behalf.stack overflow is the client in above scenario.
+iii. Authorization Server :-> it is the application server which knows the resource owner, so
+the resource owner already has an account in the authorization server. github is the example
+of authorizatin server.
+iv. Resource Server:-> it is the server where the API or the service is running. this api actually
+provides the data to the client.
+v. Redirect URL:-> this is the URL where authorization server will redirect the resource owner
+back to after granting permission to client.
+vi. Response Type :-> the type of information clients wants to receive.the most common response
+type is code where clients expects authorization code.
+vii. Scope:-> scope are the permission.the clients wants access to data.
+
+viii. consent:-> the consent is the operation authorization server takes the scope,the client is
+requesting and verifies with the resource owner whether or not the resource wants to give permisiion
+like it asks the user to allow or deny the request.
+
+ix.Client Id:-> The client already is used to identify the client with the authorization server
+so they can look 
+
+x. Client Secret:-> it is the secret thing that only client and authorization server know.this
+allows the client and authorization server to securly exchange information privately behind the
+scene.
+
+xi. Authorization Code:-> this is a short lived temporary code that the server sent back to the
+client declined since the authorization code to authorixation server to exchange it for a token.
+
+xii. Access Token:-> access token is the key the client will use.from that point onward to 
+communicate with the resource server.so this gives the client the permission to request the data 
+or perform action with the resource server.
+
+
+Authorization Code Flow:-> 
+-> The Resource owner sends the reqest to authorization server(accounts.github.com) with the
+help of the client(stackoverflow).when client clicks on login with github button then client(
+stack overflow) sends the client id,redirect URI,response type scope to the authorization
+server.
+-> authoriation server(accounts.github.com) tries to verify who you are ,may even pop up a 
+login screen.after login is completed it will show you consent form for confirmation of login.it 
+will be send to the resource owner.
+
+-> authoriatinn server redirects and sends authorization code to the client.
+-> then client sends authorization code(client id,client secret) to the authorization server.
+-> authorization server verifies the Auth token send by the client.
+-> after verification authorization server sends the access token to the client.
+-> client again sends that access token to the resource server(profile.githube.com)
+-> resource server(profile.github.com) verifies the access token send by client.
+-> resource server sends the data to the client.
+
+OAUTH 2.0 Channel:->
+Back Channel : Highly Secure
+Front Channel : Less Secure
+
+Open ID Connect:-> 
+-> OAUTH 2.0 is only for Authorizational i.e grant accesss to data and features.
+-> Open ID Connect = OIDC
+-> OIDC sits on top of OAUTH 2.0
+-> Not Mutually exclsive 
+-> Identity - Information about logged in person
+-> Authorization Server becomes identity Provider
+-> OIDC enables SSO(SIngle Sign-ON)
+
+Note:-> The working principle of OAUTH 2.0 and OIDC is same except
+-> scope which sends to authorization server with other values must be open id.
+-> here authorization server is implemented by okta.
+-> in case of oauth 2.0 it sends access token to the client after verification of the auth code.
+but in OIDC the authorization server sends access token as well as id token.this id token is
+represented as a JWT token.
+
+Okta Introduction:-> 
+-> Identity Management Service.
+-> Provision and manage users like employees,customers,supppliers etc.
+-> connect users to cloud and saas apps.
+-> it can streamline the user experienced by connecting the users to cloud and Saas apps.
+-> support different security mechanism like authentication,authorization,single-sign-on,MFA,etc.
+-> support various industry standards like SAML,OAUTH,OIDC etc.
+-> Identity management as a service 
+-> Build on AWS
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

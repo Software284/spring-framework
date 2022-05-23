@@ -1,0 +1,15 @@
+{
+	"id": 14,
+	"firstName": "mahesh",
+	"lastName": "lamichhane",
+	"active" : true,
+	"address": {
+		"street": "garlung-8",
+		"city": "Baglung",
+		"state": "gandaki pradesh",
+		"zip": "19103",
+		"country": "Nepal"
+		},
+	"languages":["Java","C#","Python","Javascript"],
+	"company": "lamichhane -cooperation"
+}

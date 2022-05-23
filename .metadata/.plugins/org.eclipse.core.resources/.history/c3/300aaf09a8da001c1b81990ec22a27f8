@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>21.spring-rest-crm-crud-app</groupId>
+	<artifactId>com.lamichhane.rest</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>war</packaging>
+
+	<name>spring rest demo</name>
+	<!-- FIXME change it to the project's website -->
+	<url>http://www.example.com</url>
+
+	<properties>
+		<springframework.version>5.0.2.RELEASE</springframework.version>
+		<hibernate.version>5.2.18.Final</hibernate.version>
+		<oracle.connector.version>19.3.0.0</oracle.connector.version>
+		<c3po.version>0.9.1.2</c3po.version>
+		<servlet.version>3.1.0</servlet.version>
+		<jsp.version>2.3.1</jsp.version>
+		<jackson.version>2.13.1</jackson.version>
+		<aspectj.version>1.5.4</aspectj.version>
+		<junit.version>3.8.1</junit.version>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
+	</properties>
+
+	<dependencies>
+
+		<!-- Spring MVC Support -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+			<version>${springframework.version}</version>
+		</dependency>
+		
+		<!-- Spring Transaction Support -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-tx</artifactId>
+			<version>${springframework.version}</version>
+		</dependency>
+		
+		<!-- Spring ORM Support -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-orm</artifactId>
+			<version>${springframework.version}</version>
+		</dependency>
+		
+		<!-- Hibernate Support -->
+		<dependency>
+			<groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+			<version>${hibernate.version}</version>
+		</dependency> 
+		
+		<!-- Oracle Database Support -->
+		<dependency>
+  			<groupId>com.oracle.ojdbc</groupId>
+  			<artifactId>ojdbc8</artifactId>
+  			<version>${oracle.connector.version}</version>
+		</dependency>
+		
+		<!-- C3P0 Connection Pool Support -->
+		<dependency>
+  			<groupId>c3p0</groupId>
+  			<artifactId>c3p0</artifactId>
+  			<version>${c3po.version}</version>
+		</dependency>
+
+
+		<!-- Support For Jackson Databind -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>${jackson.version}</version>
+		</dependency>
+
+		<!--Support For Servlet Api -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>${servlet.version}</version>
+		</dependency>
+		
+		<!-- Support For JSP API -->
+		<dependency>
+			<groupId>javax.servlet.jsp</groupId>
+			<artifactId>javax.servlet.jsp-api</artifactId>
+			<version>${jsp.version}</version>
+		</dependency>
+
+		<!-- Support For JUNIT Testing -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>${junit.version}</version>
+		</dependency>
+		
+		<!-- Support For Spring AOP -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+            <artifactId>spring-aop</artifactId>
+            <version>${springframework.version}</version>
+		</dependency>
+		
+		<!-- Implementaion Of Spring AOP -->
+		<dependency>
+			  <groupId>aspectj</groupId>
+			  <artifactId>aspectjweaver</artifactId>
+			  <version>${aspectj.version}</version>
+		</dependency>
+
+
+	</dependencies>
+
+
+	<!-- TO DO: Add support for Maven WAR Plugin -->
+
+	<build>
+		<finalName>spring-rest-demo-example</finalName>
+
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<!-- Add Maven coordinates (GAV) for: maven-war-plugin -->
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-war-plugin</artifactId>
+					<version>3.2.0</version>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+</project>

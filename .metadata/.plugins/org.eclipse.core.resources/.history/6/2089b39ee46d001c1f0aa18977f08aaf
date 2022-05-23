@@ -1,0 +1,40 @@
+import java.util.Scanner;
+
+public class Test {
+
+	public static void main(String[] args) {
+		
+		
+		
+		System.out.println("##################################################");
+		System.out.println("#           ENTER 1 TO CREATE A ACCOUNT           #");
+		System.out.println("#    ENTER 2 TO DEPOSIT AMOUNT IN YOUR ACCOUNT    #");
+		System.out.println("#      ENTER 3 TO WITHDRAW AMOUNT FROM ACCONT     #");
+		System.out.println("##################################################");
+		
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Enter Your Choice=");
+		int  choice = sc.nextInt();
+		switch(choice) {
+			
+			case 1:{
+				Account acc = new Account();
+				acc.setId(1122);
+				acc.setBalance(20000);
+				acc.setAnnualInterestRate(4.5);
+				break;
+			}
+			case 2:{
+				System.out.println("2 selected");
+				break;
+			}
+			case 3:{
+				System.out.println("3 selected");
+				break;
+			}
+			
+		}
+
+	}
+
+}

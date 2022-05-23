@@ -1,0 +1,5 @@
+package com.lamichhane.springbootdemo.controller;
+
+public class DemoController {
+
+}

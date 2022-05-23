@@ -1,0 +1,11 @@
+What is Spring AutoWiring?
+-> For dependency injection, Spring can use auto wiring
+-> Spring will look for a class that matches the property
+-> Spring will inject it automatically... hence it is
+autowired.
+
+Autowiring:->
+-> Injecting FortuneService into a Coach implementation
+-> Spring will scan @Component
+-> Any one implements FortuneService interface??
+-> if so, let's inject them ... oop which one?

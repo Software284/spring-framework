@@ -1,0 +1,6 @@
+#Tomcat publish data
+#Sat Jan 15 14:43:34 NPT 2022
+org.eclipse.jst.jee.server\:/binary\:C\:\\Users\\Programmer\\.m2\\repository\\org\\springframework\\spring-web\\5.2.11.RELEASE\\spring-web-5.2.11.RELEASE.jar=WEB-INF/lib/spring-web-5.2.11.RELEASE.jar
+org.eclipse.jst.jee.server\:/binary\:C\:\\Users\\Programmer\\OneDrive\\Desktop\\Desktop\ FIle\\Spring\ Framework\\18.Spring-MVC-CRM-App-With-AOP-Logging-Support-With-Hibernate-With-XML\\src\\main\\webapp\\WEB-INF\\lib\\spring-web-5.3.9-sources.jar=WEB-INF/lib/spring-web-5.3.9-sources.jar
+org.eclipse.jst.jee.server\:/binary\:C\:\\Users\\Programmer\\OneDrive\\Desktop\\Desktop\ FIle\\Spring\ Framework\\18.Spring-MVC-CRM-App-With-AOP-Logging-Support-With-Hibernate-With-XML\\src\\main\\webapp\\WEB-INF\\lib\\spring-web-5.3.9.jar=WEB-INF/lib/spring-web-5.3.9.jar
+org.eclipse.jst.jee.server\:/binary\:C\:\\Users\\Programmer\\.m2\\repository\\org\\springframework\\spring-web\\5.0.2.RELEASE\\spring-web-5.0.2.RELEASE.jar=WEB-INF/lib/spring-web-5.0.2.RELEASE.jar

@@ -1,0 +1,54 @@
+import java.util.Date;
+import java.util.Scanner;
+
+public class Test {
+	
+	public static void displayAccountInformation(Account a) {
+		System.out.println("ID: "+a.getId());
+		System.out.println("BALANCE: "+a.getBalance());
+		System.out.println("ANNUAL INTEREST RATE:"+ a.getAnnualInterestRate());
+		System.out.println("ACCOUNT CREATED DATE:"+a.getCreatedDate());
+		
+	}
+
+	public static void main(String[] args) {
+		
+		
+		
+		System.out.println("##################################################");
+		System.out.println("#           ENTER 1 TO CREATE A ACCOUNT           #");
+		System.out.println("#    ENTER 2 TO DEPOSIT AMOUNT IN YOUR ACCOUNT    #");
+		System.out.println("#      ENTER 3 TO WITHDRAW AMOUNT FROM ACCONT     #");
+		System.out.println("##################################################");
+		
+		Account acc = null;
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Enter Your Choice=");
+		int  choice = sc.nextInt();
+		switch(choice) {
+			
+			case 1:{
+				acc = new Account(1122,20000);
+				acc.setAnnualInterestRate(4.5);
+				acc.setCreatedDate(new Date());
+				displayAccountInformation(acc);
+				break;
+			}
+			
+			
+			case 2:{
+				double data = acc.getBalance();
+				double new_data = data + 3000;
+				acc.setBalance(new_data);
+				break;
+			}
+			case 3:{
+				System.out.println("3 selected");
+				break;
+			}
+			
+		}
+
+	}
+
+}

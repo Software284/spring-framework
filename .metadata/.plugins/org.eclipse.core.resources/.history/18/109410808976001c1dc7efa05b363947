@@ -1,0 +1,6 @@
+package com.lamichhane.springbootdemo.controller;
+
+@RestController
+public class DemoController {
+
+}

@@ -1,0 +1,14 @@
+What are Java Annotations?
+->Special labels/marksers added to java classes
+->Provide meta-data about the class
+-> Processed at compile time or run-time for special
+processing.
+
+Why Spring Configuration with Annotations:->
+-> XML configuration can be verbose
+-> Configure your spring beans with Annotations
+-> Annotations minimizes the XML configurations.
+
+Scanning for Component Classes:->
+-> spring will scan your java classes for special annotations
+-> automatically register the beans in the spring container

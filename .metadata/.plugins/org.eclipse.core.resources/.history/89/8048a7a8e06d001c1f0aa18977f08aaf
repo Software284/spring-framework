@@ -1,0 +1,14 @@
+
+public class Account {
+	
+	private int id;
+	private double balance;
+	private double annualInterestRate;
+
+	public static void main(String[] args) {
+		
+		System.out.println(" ");
+
+	}
+
+}

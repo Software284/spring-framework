@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:context="http://www.springframework.org/schema/context"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context.xsd">
+
+	
+    <!-- Define your beans here for dependent object injection -->
+    
+    <bean id="a1" class="constructor.dependency.injection.with.object.Address">
+    	<constructor-arg value="ghaziabad"></constructor-arg>
+    	<constructor-arg value="UP"></constructor-arg>
+    	<constructor-arg value="India"></constructor-arg>
+    </bean>
+    
+    
+    <bean id="e" class="constructor.dependency.injection.with.object.Employee">
+    	<constructor-arg value = "12" type="int"></constructor-arg>
+    	<constructor-arg value="Sonoo"></constructor-arg>
+    	<constructor-arg>
+    		<ref bean ="a1"/>
+    	</constructor-arg>
+    </bean>
+    
+    <!--  Define your beans here for primitive and string values -->
+    <bean id = "ee" class="construcotr.dependency.injection.with.primitive.and.string.Employee">
+   		<constructor-arg value="10" type="int"></constructor-arg>
+   		<constructor-arg value="mahesh"></constructor-arg>
+    </bean>
+    
+    <!--  Define your beans here for collection list -->
+    <bean id="q" class="constructor.dependency.injection.with.collection.lilst.Question">
+    	<constructor-arg value="111" type="int"></constructor-arg>
+    	<constructor-arg value="What is java?"></constructor-arg>
+    	<constructor-arg>
+    		<list>
+    			<value>Java is a programming language</value>
+    			<value>Java is a Platform</value>
+    			<value>Java is an island of indonasia</value>
+    		</list>
+    	</constructor-arg>
+    </bean>
+    
+     <!--  Define your beans here for collection set -->
+     <bean id="q2" class="constructor.dependency.injection.with.collection.set.Question">
+     	<constructor-arg value="222" type="int"></constructor-arg>
+     	<constructor-arg value="What is java?"></constructor-arg>
+    	<constructor-arg>
+    		<set>
+    			<value>Java is a programming language</value>
+    			<value>Java is a Platform</value>
+    			<value>Java is an island of indonasia</value>
+    		</set>
+    	</constructor-arg>
+     </bean>
+     
+      <!--  Define your beans here for collection map -->
+      <bean id="qq" class="constructor.dependency.injection.with.collection.map.Question">
+      	<constructor-arg value="111" type="int"></constructor-arg>
+      	<constructor-arg value="What is Java?"></constructor-arg>
+      	<constructor-arg>
+      		<map>
+      			<entry key="Java is a programming language" value="Ajay Kumar"></entry>
+      			<entry key="Java is a Platform" value="John Smith"></entry>
+      			<entry key="Java is an Island" value="Raj Kumar"></entry>
+      		</map>
+      	</constructor-arg>
+      </bean>
+      
+      
+      <!--  Define your beans here for inheriting bean -->
+      <bean id="z1" class="constructor.dependency.injection.with.inheriting.bean.Employee">
+      	<constructor-arg value="888" type="int"></constructor-arg>
+      	<constructor-arg value="Sachin"></constructor-arg>
+      </bean>
+      
+      <bean id="address1" class="constructor.dependency.injection.with.inheriting.bean.Address">
+      	<constructor-arg value="21,Lohinager"></constructor-arg>
+      	<constructor-arg value="Ghaziabad"></constructor-arg>
+      	<constructor-arg value="UP"></constructor-arg>
+      	<constructor-arg value="USA"></constructor-arg>
+      </bean>
+      
+      <bean id="z2" class="constructor.dependency.injection.with.inheriting.bean.Employee" parent="z1">
+      	<constructor-arg ref="address1"></constructor-arg>
+      </bean>
+      
+      <!--  Define your beans here for setter dependency injection with primitive and string value -->
+      <bean id="s1" class="setter.dependency.injection.with.primitive.and.string.Student">
+      	<property name="id">
+      		<value>999</value>
+      	</property>
+      	<property name="name">
+      		<value>Hero</value>
+      	</property>
+      	<property name="city">
+      		<value>Kathmandu</value>
+      	</property>
+      </bean>
+      
+      
+      <!--  Define your beans here for setter dependency injection with dependent object -->
+      <bean id="address" class="setter.dependency.injection.with.dependent.object.Address">
+      	<property name="addressLine1">
+      		<value>Balewa</value>
+      	</property>
+      	<property name="city">
+      		<value>Baglung</value>
+      	</property>
+      	<property name="state">
+      		<value>BA NA PA 14</value>
+      	</property>
+      	<property name="country">
+      		<value>Nepal</value>
+      	</property>
+      </bean>
+      
+      <bean id="actor" class="setter.dependency.injection.with.dependent.object.Actor">
+      	<property name="id">
+      		<value>100</value>
+      	</property>
+      	<property name="name">
+      		<value>Mahesh Lamichhane</value>
+      	</property>
+      	<property name="address" ref="address">
+      		
+      	</property>
+      </bean>
+      
+      <!--  Define your beans here for setter dependency injection with collection list -->
+      <bean id="myQuestions" class="setter.dependency.injection.with.collection.list.Questions">
+      	<property name="id" value="444"></property>
+      	<property name="name" value="What is Java OOP Concept?"></property>
+      	<property name="list">
+      		<list>
+      		<value>Object Oriented Programming language</value>
+      		<value>Platform independent Programming language</value>
+      		<value>Secure Programming language</value>
+      		</list>
+      		
+      	</property>
+      </bean>
+      
+       <!--  Define your beans here for setter dependency injection with collection list -->
+      <bean id="myQuestions2" class="setter.dependency.injection.with.collection.set.Questions">
+      	<property name="id" value="444"></property>
+      	<property name="name" value="Top 3 Fruites?"></property>
+      	<property name="list">
+      		<set>
+      		<value>Apple</value>
+      		<value>Banana</value>
+      		<value>Grapes</value>
+      		</set>
+      		
+      	</property>
+      </bean>
+      
+      <!-- Define your beans here for setter dependency injection with collection map -->
+      <bean id="myBean" class="setter.dependency.injection.with.collection.map.Question">
+      	<property name="id" value="999"></property>
+      	<property name="name" value="What are best full stack developer courses"></property>
+      	<property name="answers">
+      		<map>
+      			<entry key="Core Java" value="Durga"></entry>
+      			<entry key="Advance Java" value="Chadwick"></entry>
+      			<entry key="Hibernate" value="28 minutes"></entry>
+      		</map>
+      	</property>
+      </bean>
+      
+      <!-- Define your beans here for constructor dependency injection with collection list with object -->
+      <bean id="ans22" class="constructor.dependency.injection.with.collection.list.with.object.Answers">
+      	<constructor-arg value="Java is Secure"></constructor-arg>
+      </bean>
+      
+      <bean id="ans23" class="constructor.dependency.injection.with.collection.list.with.object.Answers">
+      	<constructor-arg value="Java is Platform Independent"></constructor-arg>
+      </bean>
+      
+      <bean id="ans24" class="constructor.dependency.injection.with.collection.list.with.object.Answers">
+      	<constructor-arg name="answer" value="Java is Robust"></constructor-arg>
+      </bean>
+      
+      <bean id="questions22" class="constructor.dependency.injection.with.collection.list.with.object.Question">
+      	<constructor-arg value="3434"></constructor-arg>
+      	<constructor-arg value="What is java?"></constructor-arg>
+      	<constructor-arg>
+      		<list>
+      			<ref bean="ans22"/>
+      			<ref bean="ans23"/>
+      			<ref bean="ans24"/>
+      		</list>
+      	</constructor-arg>
+      </bean>
+      
+      
+      <!-- Define your beans here for constructor dependency injection with collection map with object -->
+      <bean id="ans122" class="constructor.dependency.injection.with.collection.map.with.object.Answers">
+      	<constructor-arg value="java is platform independent"></constructor-arg>
+      </bean>
+      <bean id="ans123" class="constructor.dependency.injection.with.collection.map.with.object.Answers">
+      	<constructor-arg value="java is secure"></constructor-arg>
+      </bean>
+      <bean id="ans124" class="constructor.dependency.injection.with.collection.map.with.object.Answers">
+      	<constructor-arg value="Robust programming"></constructor-arg>
+      </bean>
+      
+      <bean id="pub122" class="constructor.dependency.injection.with.collection.map.with.object.Publisher">
+      	<constructor-arg value="Mahesh Lamichhane"></constructor-arg>
+      </bean>
+      <bean id="pub123" class="constructor.dependency.injection.with.collection.map.with.object.Publisher">
+      	<constructor-arg value="Nabin Sharma"></constructor-arg>
+      </bean>
+      <bean id="pub124" class="constructor.dependency.injection.with.collection.map.with.object.Publisher">
+      	<constructor-arg value="Daring Pits"></constructor-arg>
+      </bean>
+      
+      <bean id="myHero" class="constructor.dependency.injection.with.collection.map.with.object.Question">
+      	<constructor-arg value="720"></constructor-arg>
+      	<constructor-arg value="What is Java"></constructor-arg>
+      	<constructor-arg>
+      		<map>
+      			<entry key-ref="ans122" value-ref="pub122"></entry>
+      			<entry key-ref="ans123" value-ref="pub123"></entry>
+      			<entry key-ref="ans124" value-ref="pub124"></entry>
+      		</map>
+      	</constructor-arg>
+      </bean>
+      
+      <!-- Define your beans here for setter dependency injection with collection list object -->
+      <bean id="zero123" class="setter.dependency.injection.with.collection.list.with.object.Answers">
+      	<property name="answer" value="Java is secure"></property>
+      </bean>
+      <bean id="zero124" class="setter.dependency.injection.with.collection.list.with.object.Answers">
+      	<property name="answer" value="Java is independent"></property>
+      </bean>
+      <bean id="zero125" class="setter.dependency.injection.with.collection.list.with.object.Answers">
+      	<property name="answer" value="Java is robust"></property>
+      </bean>
+      
+      <bean id="hero444" class="setter.dependency.injection.with.collection.list.with.object.Questions">
+      	<property name="id" value="555"></property>
+      	<property name="name" value="What is java?"></property>
+      	<property name="list">
+      		<list>
+      			<ref bean="zero123"></ref>
+      			<ref bean ="zero124"></ref>
+      			<ref bean="zero125"></ref>
+      		</list>
+      	</property>
+      	
+      </bean>
+      
+      <!-- Define your beans here for setter dependency injection with collection map object -->
+      <bean id="Publisher811" class="setter.dependency.injection.with.collection.map.with.object.Publisher">
+      	<property name="publisher" value="Mahesh Lamichhane"></property>
+      </bean>
+      <bean id="Publisher812" class="setter.dependency.injection.with.collection.map.with.object.Publisher">
+      	<property name="publisher" value="Nabin Sharma"></property>
+      </bean>
+      <bean id="Publisher813" class="setter.dependency.injection.with.collection.map.with.object.Publisher">
+      	<property name="publisher" value="Daring pits"></property>
+      </bean>
+      
+      <bean id="Answer811" class="setter.dependency.injection.with.collection.map.with.object.Answers">
+      	<property name="answer" value="Java is Dynamic"></property>
+      </bean>
+      <bean id="Answer812" class="setter.dependency.injection.with.collection.map.with.object.Answers">
+      	<property name="answer" value="Java is object oriented"></property>
+      </bean>
+      <bean id="Answer813" class="setter.dependency.injection.with.collection.map.with.object.Answers">
+      	<property name="answer" value="Java is scalable"></property>
+      </bean>
+      
+      <bean id="myYr" class="setter.dependency.injection.with.collection.map.with.object.Question">
+      	<property name="id" value="788"></property>
+      	<property name="name" value="What is java?"></property>
+      	<property name="answers">
+      		<map>
+      			<entry key-ref="Answer811" value-ref="Publisher811"></entry>
+      			<entry key-ref="Answer812" value-ref="Publisher812"></entry>
+      			<entry key-ref="Answer813" value-ref="Publisher813"></entry>
+      		</map>
+      	</property>
+      </bean>
+      
+    
+    
+    
+    
+    
+   
+
+</beans>
+
+
+
+
+

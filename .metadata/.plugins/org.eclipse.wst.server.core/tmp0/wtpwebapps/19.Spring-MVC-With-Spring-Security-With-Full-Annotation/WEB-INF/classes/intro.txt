@@ -1,0 +1,19 @@
+Spring Security's CSRF Protection:-> 
+-> CSRF protection is enabled by default in spring security.
+-> spring security uses the synchronizer token pattern
+  -> each request includes a session cookie and randomly generated token
+ -> for request processing, spring security verifies token before processing
+ -> All of this is handled by spring security filters.
+ 
+ -> for form submissions use POST instead of get
+ -> include csrf token in form submission
+ -> <form:form> auto magically adds csrf token
+ -> if you don't use <form:form>,you must manually add csrf token
+ 
+ <form>
+ 	<input type="hidden" 
+ 	    name="${_csrf.parameterName}"
+ 	    value="${_csrf.token}"/>
+ </form>
+ 
+ spring mvc form tag is preferred

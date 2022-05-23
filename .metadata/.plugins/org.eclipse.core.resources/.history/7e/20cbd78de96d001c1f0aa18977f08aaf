@@ -1,0 +1,58 @@
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Scanner;
+
+public class MyTest {
+
+	public static void main(String[] args) {
+		
+		
+		List<String> mylist = new ArrayList<String>();
+		Scanner sc = new Scanner(System.in);
+		int i =1;
+		
+		
+		System.out.println("########################################");
+		System.out.println("# Enter the votes, one votes per line. #");
+		System.out.println("# End with either -1 or an empty line. #");
+		System.out.println("########################################");
+		
+		while(i != 😎 {
+			String data = sc.next();
+			mylist.add(data);
+			i++;
+		}
+		
+		List<String> uniquelist= new ArrayList<>();
+		for(String s: mylist) {
+			if(!uniquelist.contains(s)) {
+				uniquelist.add(s);
+			}
+		}
+		int count[] = new int[uniquelist.size()];
+	    
+		for(int k=0; k<uniquelist.size();k++) {
+			int user1 = Collections.frequency(mylist, uniquelist.get(k));
+			count[k] = user1;
+		}
+	
+		
+		for(int z=0; z<uniquelist.size();z++) {
+			System.out.println(uniquelist.get(z)+" reveived "+count[z]+" votes");
+		}
+		
+		int highest_vote=0;
+		int index = 0;
+		
+		for(int y=0; y<uniquelist.size();y++) {
+			if(count[y] > highest_vote) {
+				highest_vote=count[0];
+				index = y;
+			}
+		}
+		System.out.println("The Winner is "+uniquelist.get(index)+" "+count[index]);
+
+	}
+
+}

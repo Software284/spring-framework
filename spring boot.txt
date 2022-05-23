@@ -1,0 +1,237 @@
+Spring Advantages:->
+i. make it easier to get started with spring development
+ii. minimize the amount of manual configuration
+ -> perform auto-configuration based on props file and jar classpath
+iii. helps to resolve dependency conflicts(maven or gradle)
+iv. Provide an embedded http server so you can get started quickly.
+v. it automatically download maven using maven wrapper.
+vi. we dont' need to initialize dispatcher servlet explictly.
+
+-> it provides spring boot starter which is responsible for downloading
+all the compatible dependency.for example spring boot starter web
+contains spring-web,spring-webmvc,hibernate-validator,tomcat,json
+etc.save's the developer from having to list all of the individual
+dependencies.also, makes sure you have compatible versions.
+
+@SpringBootApplication composed of following annotation:->
+i.@EnableAutoConfiguration
+ii. @ComponentScan
+iii. @Configuration
+
+@EnableAutoConfiguration:-> Enables Spring boot's auto-configuration support
+
+@ComponentScan:-> Enables component scanning of current package also
+recursively scans sub-packages
+
+@Configuration:-> Able to register extra beans with @Bean or
+import other configuration classes.
+
+Spring Boot Starters:->
+-> a curated list of Maven dependencies.
+-> a collection of dependencies grouped together
+-> Tested and verified by the Spring Developent team
+-> makes it much easier for the developer to get started with spring
+-> reduces the amount of maven configuration.
+
+Spring Boot Starter Parent:-> 
+-> Spring Boot provides a "Starter Parent"
+-> This is a special starter that provides maven defaults.
+-> No need to list individual versions beacause starters inherit 
+version from starter parent.
+
+Spring boot Dev Tools support
+Spring Boot Actuator
+ -> How can I monitor and manage my application
+ -> How can I check the application health?
+ -> How can I access application metrics?
+ -> Exposes endpoints to monitor and manage your application
+ -> You easily get DevOps functionality out-of-the-box
+ -> Simply add the dependency to your POM file
+ -> REST endpoints are automatically added to your application.
+ -> Automatically exposes endpoints for metrics out-of-the-box
+ -> Endpoints are prefixed with: /actuator
+
+Examples:->
+i. /health:-> Health information about your application
+ii. /info:-> Information about your project
+iii. /auditevents:-> Audit events for your application
+iv. /beans :-> List of all beans registered in the spring application context
+v. /mappings: -> List of all @RequestMapping path
+ etc...
+
+Note:-> By default, only /health and /info are exposed.to expose
+all actuator endpoints over HTTP usee wildcard "*" to expose all
+endpoints.
+
+Spring Boot Properties File:->
+i. Core Properties
+#Log Levels Severity Maping
+logging.level.org.springframework=DEBUG
+logging.level.org.hibernate=TRACE
+logging.level.com.luv2code=INFO
+{TRACE,DEBUG,INFO,WARN,ERROR,FATAL,OFF}
+
+ii. Web Properties
+#HTTP server port
+server.port = 7070
+#Context path of the application
+server.servlet.context-path=/my-silly-app
+#Default HTTP session time out
+server.servlet.session.timeout=15m
+
+iii. Actuator Properties
+#Endpoints to include by name or wildcard
+management.endpoints.web.exposure.include=*
+#Endpoints to exclude by name or wildcard
+management.endpoints.web.exposure.exclude=beans,mapping
+#Base path for actuator endpoints
+management.endpoints.web.base-path=/actuator
+
+iv. Security Properties
+#Default user name
+spring.security.user.name=admin
+#Password for default user
+spring.security.user.password=topsecret
+
+v. Data Properties
+#JDBC URL of the database 
+spring.datasource.url=jdbc:oracle:thin:@localhost:1521:orcl
+#Login username of the database 
+spring.datasource.username=scott
+#Login password of the database
+spring.datasource.password=tiger
+
+Spring Data JPA:-> Before spring boot we need to inject datasource
+to the session factory then we use hibernate with spring.but with
+data JPA we don't need to do all those configuration stufs.we don't
+need to give JDBC driver class name,Spring Boot automatically 
+detects it based on URL.
+
+-> In Spring boot,Hibernate is default implementtion of JPA.
+-> EntityManager is simillar to Hibernate Session Factory
+-> EntityManager can serve as a wrapper for a hibernate session object.
+-> we can inject the EntityManager into our DAO
+
+
+Various DAO Techniques:->
+i. Use EntityManager but native Hibernate API
+ii.Use EntityManager and standard JPA API
+iii. Spring DATA JPA
+
+
+
+Hibernate Native API CRUD Functions:->
+SaveOrUpdate()
+update()
+Get(Class,id)
+delete()
+Query<Employee> query = mysession.createQuery("from Employee");
+
+JPA API CRUD FUNCTIONS:->
+Merge
+persist
+find
+remove
+Query query = entitymanager.createQuery("from Employee")
+
+Spring Data JPA:->
+-> create a dao and just plug in your entity type and primary key.
+-> spring will give you a CRUD implementation for free ... like MAGIC
+-> Helps to minimize boiler-plate DAO code
+-> Spring Data JPA provides the interface: JpaRepository
+-> Exposes methods(some by inheritance from parents) like 
+
+
+ findAll()
+ findById()
+ save()
+ deleteById()
+ others
+
+Advance Features:->
+-> advance features available for extending and adding custom queries with JPQL
+-> advanced features availabel for query domain specific language
+-> advanced features available for defining custom methods(low-level-coding)
+
+
+Spring Data Rest:->
+-> Leverages your existing JpaRepository
+-> Spring will give you a REST CRUD implementation for free like magic.
+-> helps you minimie boiler-plate REST code
+-> no new coding required
+-> spring data rest will expose these endpoints for free
+POST: /employees
+GET: /employees
+GET: /employees/{employeeId}
+PUT: /employees/{employeeId}
+DELETE: /employees/{employeeId}
+
+-> By default, Spring Data REST will create endpoints based on entity type
+-> Simple pluralied form
+  -> First character of Entity type is lowercase
+  -> then just adds an "s" to the entity
+
+HATEOAS:->
+-> spring data rest endpoints are HATEOS compliant
+-> HATEOAS:-> Hypermedia as the engine of application state
+-> Hypermedia-driven sites provide information to access REST interfaces.
+-> Think of it as meta-data for REST data
+
+Custom method convention:->
+
+@RepositoryRestResource(path="members")
+public interface EmployeeRepository extends JpaRepository<Employee,Integer>{
+
+->Spring data REST will return the first 20 elements.
+
+Application Properties:-> 
+spring.data.rest.base-path
+spring.data.rest.default-page-size
+spring.data.rest.max-page-size
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
